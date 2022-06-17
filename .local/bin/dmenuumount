@@ -9,6 +9,7 @@ unmountusb() {
 	chosen="$(echo "$drives" | dmenu -i -p "Unmount which drive?")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	[ -z "$chosen" ] && exit
+	fuser -km "$chosen"
 	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
 	}
 
